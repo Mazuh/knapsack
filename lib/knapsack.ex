@@ -1,7 +1,8 @@
 defmodule Knapsack do
   @moduledoc """
-  Knapsack solution.
+  Solution for Knapsack problem.
   """
+  use TypeCheck
 
   @doc """
   0/1 Knapsack Problem.
@@ -16,15 +17,14 @@ defmodule Knapsack do
 
   Items here are indivisible, their entire weight/profit is added or removed from the bag.
   """
+  @spec! zero_one_knapsack([%{profit: integer(), weight: integer()}], integer()) :: integer()
   def zero_one_knapsack(items, weight_limit) do
     keep_packing(items, weight_limit)
     |> Enum.map(& &1.profit)
     |> Enum.sum()
   end
 
-  defp keep_packing([], _weight_limit) do
-    []
-  end
+  defp keep_packing([], _weight_limit), do: []
 
   defp keep_packing(items, weight_limit) do
     {biggest_item, items_remaining} =
@@ -44,9 +44,7 @@ defmodule Knapsack do
     end
   end
 
-  defp pop_biggest_profit(items) when length(items) == 0 do
-    {nil, []}
-  end
+  defp pop_biggest_profit([]), do: {nil, []}
 
   defp pop_biggest_profit(items) do
     biggest = Enum.max_by(items, & &1.profit)
