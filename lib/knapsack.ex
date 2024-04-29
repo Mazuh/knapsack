@@ -32,15 +32,11 @@ defmodule Knapsack do
       |> Enum.filter(&(&1.weight <= weight_limit))
       |> pop_biggest_profit()
 
-    weight_remaining =
-      unless is_nil(biggest_item) do
-        weight_limit - biggest_item.weight
-      end
-
-    if weight_remaining do
-      [biggest_item | keep_packing(items_remaining, weight_remaining)]
-    else
+    if is_nil(biggest_item) do
       keep_packing(items_remaining, weight_limit)
+    else
+      weight_remaining = weight_limit - biggest_item.weight
+      [biggest_item | keep_packing(items_remaining, weight_remaining)]
     end
   end
 
