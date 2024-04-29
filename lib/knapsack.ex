@@ -24,8 +24,6 @@ defmodule Knapsack do
     |> Enum.sum()
   end
 
-  defp keep_packing([], _weight_limit), do: []
-
   defp keep_packing(items, weight_limit) do
     {biggest_item, items_remaining} =
       items
@@ -33,7 +31,7 @@ defmodule Knapsack do
       |> pop_biggest_profit()
 
     if is_nil(biggest_item) do
-      keep_packing(items_remaining, weight_limit)
+      []
     else
       weight_remaining = weight_limit - biggest_item.weight
       [biggest_item | keep_packing(items_remaining, weight_remaining)]
